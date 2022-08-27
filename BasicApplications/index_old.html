@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecma Script Features List</title>
+    <style>
+      body {
+        font-family: "Calibri", sans-serif;
+        border: 0;
+        margin: 0;
+        padding: 0;
+      }
+      .padded-left-1 {
+        margin-left: 1em;
+      }
+      .padded-left-2 {
+        margin-left: 2em;
+      }
+      .container__div {
+        padding: 8px 15px;
+        background-color: #e9e9e9;
+      }
+      .inner__container {
+        padding: 4px 0px;
+        background-color: #d6d6d6;
+        transition: all 0.2s ease-in-out;
+      }
+      .container__div h2 {
+        cursor: pointer;
+        background-color: #d6d6d6;
+        margin: 5px 0;
+        padding: 5px;
+      }
+      .inner__container ul {
+        margin: 0;
+      }
+      .inner__container ul li {
+        font-weight: bold;
+      }
+      .inner__container ul li ul li {
+        font-weight: 500;
+      }
+      .inner__container.hide ul {
+        display: none;
+      }
+      .inner__container.hide {
+        opacity: 0;
+        max-height: 0;
+        padding: 0;
+      }
+      .inner__footer button:hover,
+      .inner__footer button:focus {
+        background-color: rgba(220, 20, 60, 1);
+      }
+      .inner__footer button.clear {
+        background-color: rgba(255, 255, 255, 0.8);
+        outline: none;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        color: rgb(48, 48, 48);
+        cursor: pointer;
+        margin-right: 0.5em;
+      }
+      .inner__footer button.compare {
+        background-color: rgba(220, 20, 60, 0.8);
+        outline: none;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+      }
+      .inner__footer {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+      }
+      #compareFeatures {
+        display: flex;
+        align-items: flex-start;
+        padding: 8px 15px;
+      }
+
+      .compare__div:not(:last-child) .content {
+        border-right: #d6d6d6 solid 1px;
+      }
+      .compare__div .content {
+        padding: 0 15px;
+      }
+      .compare__div .content ul {
+        margin: 0;
+        padding: 0 15px;
+      }
+      .compare__div h3 {
+        margin: 0;
+        padding: 0;
+        padding-left: 8px;
+      }
+      .compare__div:nth-child(odd) h3 {
+        background-color: rgba(3, 80, 194, 1);
+        color: white;
+      }
+      .compare__div:nth-child(even) h3 {
+        background-color: rgba(3, 80, 194, 0.6);
+        color: white;
+      }
+      .compare__div:nth-child(even) .content {
+        background-color: #d6d6d6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container__div">
+      <h2><input type="checkbox" class="compare_cb" value="es2019" /> ES 2019 Features</h2>
+
+      <div id="es2019__div" class="inner__container">
+        <ul>
+          <li>String.trimStart()</li>
+          <li>String.trimEnd()</li>
+          <li>Array.flat()</li>
+          <li>Object.fromEntries</li>
+          <li>Optional catch binding</li>
+        </ul>
+      </div>
+
+      <!--  -->
+      <h2><input type="checkbox" class="compare_cb" value="es2018" /> ES 2018 Features</h2>
+      <div id="es2018__div" class="inner__container hide">
+        <ul>
+          <li>Asynchronous Iteration</li>
+          <li>Promise Finally</li>
+          <li>Object Rest Properties</li>
+          <li>
+            New RegExp Features <br />
+            <ul>
+              <li>Unicode Property Escapes</li>
+              <li>Lookbehind Assertions</li>
+              <li>Named Capture Groups</li>
+              <li>Named Capture Groups</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <!--  -->
+      <h2><input type="checkbox" class="compare_cb" value="es2017" /> ES 2017 Features</h2>
+      <div id="es2017__div" class="inner__container hide">
+        <ul>
+          <li>JavaScript String padding</li>
+          <li>JavaScript Object.entries</li>
+          <li>JavaScript Object.values</li>
+          <li>JavaScript async functions</li>
+          <li>JavaScript shared memory</li>
+        </ul>
+      </div>
+
+      <!--  -->
+      <h2><input type="checkbox" class="compare_cb" value="es2016" /> ES 2016 Features</h2>
+      <div id="es2016__div" class="inner__container hide">
+        <ul>
+          <li>JavaScript Exponentiation(**)</li>
+          <li>JavaScript Exponentiation assignment(**=)</li>
+          <li>JavaScript Array.prototype.includes</li>
+        </ul>
+      </div>
+
+      <!--  -->
+      <h2><input type="checkbox" class="compare_cb" value="es6" /> ES 6 Features</h2>
+      <div id="es6__div" class="inner__container hide">
+        <ul id="es6___features__list"></ul>
+      </div>
+
+      <!--  -->
+      <h2><input type="checkbox" class="compare_cb" value="es5" /> ES 5 Features</h2>
+      <div id="es5__div" class="inner__container hide">
+        <ul id="es5___features__list"></ul>
+      </div>
+      <!--  -->
+      <div class="inner__footer">
+        <button class="clear" onclick="clearComparison()">Clear</button>
+        <button class="compare" onclick="compareFeatures()">Compare Features</button>
+      </div>
+    </div>
+    <div id="compareFeatures"></div>
+    <script>
+      const es6Features = `The let keyword,The const keyword,Arrow Functions,For/of,Map Objects,Set Objects,Classes,Promises,Symbol,Default Parameters,Function Rest Parameter,String.includes(),String.startsWith(),String.endsWith(),Array.from(),Array keys(),Array find(),Array findIndex(),New Math Methods,New Number Properties,New Number Methods,New Global Methods,Object entries,JavaScript Modules`;
+      const es6FeaturesListContainer = document.getElementById("es6___features__list");
+      es6Features
+        .split(",")
+        .forEach((f) => (es6FeaturesListContainer.innerHTML += "<li>" + f + "</li>"));
+      const es5Features = `'use strict',String[number] access,Multiline strings,String.trim(),Array.isArray(),Array forEach(),Array map(),Array filter(),Array reduce(),Array reduceRight(),Array every(),Array some(),Array indexOf(),Array lastIndexOf(),JSON.parse(),JSON.stringify(),Date.now(),Date toISOString(),Date toJSON(),Property getters and setters,Reserved words as property names,Object methods,Object defineProperty(),Function bind(),Trailing commas`;
+      const es5FeaturesListContainer = document.getElementById("es5___features__list");
+      es5Features
+        .split(",")
+        .forEach((f) => (es5FeaturesListContainer.innerHTML += "<li>" + f + "</li>"));
+      const all__h2 = document.querySelector(".container__div").querySelectorAll("h2");
+      all__h2.forEach((div) => div.addEventListener("click", () => toggleInnerContainer(div)));
+      function toggleInnerContainer(e) {
+        all__h2.forEach((d) => d?.nextElementSibling?.classList.remove("hide"));
+        all__h2.forEach((d) => d?.nextElementSibling?.classList.add("hide"));
+        e.nextElementSibling.classList.remove("hide");
+      }
+      function clearComparison() {
+        const allCb = document.querySelectorAll(".compare_cb");
+        allCb.forEach((item) => (item.checked = false));
+        const compareFeaturesContainer = document.getElementById("compareFeatures");
+        compareFeaturesContainer.innerHTML = "";
+      }
+      function compareFeatures() {
+        const onlySelected = [];
+        const allCb = document.querySelectorAll(".compare_cb");
+        allCb.forEach((item) => (item.checked ? onlySelected.push(item.value) : null));
+        onlySelected.sort((a, b) => a - b).reverse();
+        if (onlySelected.length > 1) {
+          const compareFeaturesContainer = document.getElementById("compareFeatures");
+          compareFeaturesContainer.innerHTML = "";
+          onlySelected.forEach((os, index) => {
+            const esDivInnerHTML = document.getElementById(`${os}__div`).innerHTML;
+            compareFeaturesContainer.innerHTML += `
+                              <div class='compare__div compare__div__${index}'>
+                                <h3>${os}</h3>
+                                <div class='content'>${esDivInnerHTML} </div>
+                              </div>
+                            `;
+          });
+        } else {
+          alert("Please select atleast two versions to compare");
+        }
+      }
+      // Promise
+      function sumNumbers(a, b) {
+        // if (!isNaN(a) && !isNaN(b)) {
+        //   return a + b;
+        // } else {
+        //   return new Error("Please provide numbers");
+        // }
+        return new Promise((resolve, reject) => {
+          if (!isNaN(a) && !isNaN(b)) {
+            setTimeout(() => {
+              resolve(a + b);
+            }, 2000);
+          } else {
+            reject({
+              message: "Please provide numbers",
+              errCode: "E409",
+            });
+          }
+        });
+      }
+
+      (function () {
+        let pairs = [
+          [1, 2],
+          [3, 10],
+          [5, 6],
+        ];
+        let allPromises = [];
+        for (const pair of pairs) {
+          allPromises.push(sumNumbers(pair[0], pair[1]));
+        }
+        // console.log(allPromises)
+        Promise.all(allPromises).then((res) => {
+          console.log(res);
+        });
+      })();
+
+      //   var w;
+      //   const startWorker = () => {
+      //     if (typeof Worker === undefined) {
+      //       if (typeof w === undefined) {
+      //         w = new Worker("exworker.js");
+
+      //         w.onmessage = function (event) {
+      //           document.getElementById("counterText").innerHTML = event.data;
+      //         };
+      //         console.log("worker is now running.");
+      //       }
+      //     } else {
+      //       document.getElementById("counterText").innerHTML = "Sorry! No Web Worker support.";
+      //     }
+      //   };
+
+      //   const stopWorker = () => {
+      //     w.terminate();
+      //     w = undefined;
+      //   };
+    </script>
+  </body>
+</html>
