@@ -1,9 +1,13 @@
 :root {
   --primary: #003566;
+  --primary--dark: #001e3a;
   --secondary: #ffc300;
   --secondary--dark: #927000;
   --tertiary: #001d3d;
   --dark: #000814;
+  --gray-light: #e3e3e3;
+  --gray-lighter: #eeeeee;
+  /* --gray-light: #e3e3e3; */
   --light: #ffd60a;
   --lighter: #fff5c1;
   --lightest: #fffdf0;

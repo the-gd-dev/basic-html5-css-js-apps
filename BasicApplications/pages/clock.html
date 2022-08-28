@@ -36,9 +36,69 @@
           <h2 class="jsa__inline">Clock Application</h2>
         </div>
       </div>
-      <div class="jsa__container centered">
-        <div class="clock__wrapper">
+      <div class="jsa__container centered jsa__mt-3 jsa__mb-3">
+        <div id="dateMonthYear" class="jsa__mb-3"></div>
+        <div class="analog__clock__wrapper">
+          <div class="analog__clock">
+            <div class="analog__clock__inner-pointers">
+              <div class="pointer_12_6"></div>
+              <div class="pointer_1_7"></div>
+              <div class="pointer_2_8"></div>
+              <div class="pointer_3_9"></div>
+              <div class="pointer_4_10"></div>
+              <div class="pointer_5_11"></div>
+            </div>
+            <div class="analog__clock__inner-circle">
+              <div class="analog__clock__inner-needles">
+                <div class="hours__needle needles_style">
+                  <div class="span1"></div>
+                  <div class="span2"></div>
+                </div>
+                <div class="mins__needle needles_style">
+                  <div class="span1"></div>
+                  <div class="span2"></div>
+                </div>
+                <div class="seconds__needle needles_style">
+                  <div class="span1"></div>
+                  <div class="span2"></div>
+                </div>
+              </div>
+              <div class="analog__clock__inner-center"></div>
+            </div>
+          </div>
+        </div>
+        <div class="digital__clock__wrapper">
+          <div class="digital__clock">
+            <div id="hour__box" class="jsa__flex hour__box">
+              <div class="digi__box box__1"></div>
+              <div class="digi__box box__2"><div class="mid__seperator"></div></div>
+            </div>
+            <div class="seperator">
+              <div class="circle"></div>
+              <div class="circle"></div>
+            </div>
 
+            <div id="min__box" class="jsa__flex min__box">
+              <div class="digi__box box__1">
+                <div class="mid__seperator"></div>
+              </div>
+              <div class="digi__box box__2">
+                <div class="mid__seperator"></div>
+              </div>
+            </div>
+            <div class="seperator">
+              <div class="circle"></div>
+              <div class="circle"></div>
+            </div>
+            <div id="seconds__box" class="jsa__flex seconds__box">
+              <div class="digi__box box__1">
+                <div class="mid__seperator"></div>
+              </div>
+              <div class="digi__box box__2">
+                <div class="mid__seperator"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -46,6 +106,6 @@
       <h3>&copy; 2022 | good_developer_production</h3>
     </footer>
     <script src="../js/script.js"></script>
-    <script src="../js/clockwork.js"></script>
+    <script src="../js/clock.js"></script>
   </body>
 </html>
