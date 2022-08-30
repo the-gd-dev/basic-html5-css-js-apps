@@ -1,0 +1,236 @@
+:root {
+  --primary: #003566;
+  --primary--dark: #001e3a;
+  --secondary: #ffc300;
+  --secondary--dark: #927000;
+  --tertiary: #001d3d;
+  --dark: #000814;
+  --gray: #e0e0e0;
+  --gray-light: #e3e3e3;
+  --gray-lighter: #eeeeee;
+  /* --gray-light: #e3e3e3; */
+  --light: #ffd60a;
+  --lighter: #fff5c1;
+  --lightest: #fffdf0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+img {
+  height: 100%;
+  width: 100%;
+}
+body {
+  height: auto;
+  width: auto;
+  padding: 0;
+  margin: 0;
+  font-family: "calibri", sans-serif;
+  font-size: 18px;
+  background-color: var(--lightest);
+}
+
+.js__link {
+  text-decoration: none;
+  color: inherit;
+}
+.jsa__branding .js__link {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--tertiary);
+}
+.jsa__container {
+  display: flex;
+  flex-direction: column;
+}
+.jsa__header {
+  background-color: var(--secondary);
+  padding: 0px 15px;
+}
+.jsa__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.jsa__list__none {
+  list-style: none;
+}
+.jsa__list__none .jsa__list-item a.active,
+.jsa__list__none .jsa__list-item a:focus,
+.jsa__list__none .jsa__list-item a:hover {
+  color: var(--dark);
+}
+.jsa__list__none .jsa__list-item {
+  display: inline;
+  margin-right: 1em;
+  font-weight: 500;
+  color: var(--secondary--dark);
+  font-size: 20px;
+}
+
+.jsa__logo__container {
+  height: 150px;
+  width: 150px;
+}
+.flex__centered {
+  justify-content: center;
+  align-items: center;
+}
+.jsa__container.centered {
+  justify-content: center;
+  align-items: center;
+}
+.jsa__container {
+  display: flex;
+  width: 100%;
+}
+.jsa__paragraph {
+  font-size: 20px;
+  word-wrap: break-word;
+}
+.jsa__p-all-1 {
+  padding: 8px;
+}
+.jsa__flex.column-gap-1 {
+  column-gap: 0.75em;
+}
+.jsa__flex.column-gap-2 {
+  column-gap: 2.5em;
+}
+.jsa__flex.items-center {
+}
+
+.jsa__flex.justify-center {
+}
+.jsa__flex {
+  display: flex;
+}
+.jsa__inline {
+  display: inline;
+}
+.jsa__img__xsm {
+  height: 64px;
+  width: 64px;
+}
+.jsa__img__sm {
+  height: 100px;
+  width: 100px;
+}
+.jsa__img__sm h2 {
+  text-align: center;
+  margin: 0 auto;
+}
+.jsa__mb-1 {
+  margin-bottom: 8px;
+}
+.jsa__mb-2 {
+  margin-bottom: 16px;
+}
+.jsa__mb-3 {
+  margin-bottom: 24px;
+}
+.jsa__mt-1 {
+  margin-top: 8px;
+}
+.jsa__mt-2 {
+  margin-top: 16px;
+}
+.jsa__mt-3 {
+  margin-top: 24px;
+}
+/* form classes */
+.jsa__form-group {
+  display: flex;
+  flex-direction: column;
+}
+.jsa__form-control {
+  width: 100%;
+  height: 30px;
+  outline: none;
+  border: var(--gray) solid 2px;
+}
+.jsa__form-group label {
+  font-size: 16px;
+  font-weight: 500;
+}
+.jsa__btn-group .jsa__btn:not(:last-child) {
+  margin-right: 0.75em;
+}
+.jsa__btn.secondary {
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+  color: var(--dark);
+}
+.jsa__btn.light {
+  background-color: var(--light);
+  border-color: var(--light);
+  color: var(--dark);
+}
+.jsa__btn.dark {
+  background-color: var(--dark);
+  border-color: var(--dark);
+  color: white;
+}
+.jsa__btn.primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+.jsa__btn:disabled {
+  background-color: var(--gray-lighter);
+  border-color: var(--gray-lighter);
+  color: var(--dark);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.jsa__btn {
+  height: 38px;
+  border-style: solid;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.jsa__btn-group {
+  display: flex;
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}
+.jsa__table___container {
+  height: 100%;
+  width: 100%;
+}
+.jsa__table___wrapper {
+  max-width: 1000px;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.jsa__table {
+  border: none;
+  width: 100%;
+}
+
+.jsa__table thead tr th {
+  background-color: var(--primary--dark);
+  color: #ffffff;
+}
+.jsa__table tbody tr td {
+  text-align: center;
+}
+.jsa__table tbody tr td,
+.jsa__table thead tr th {
+  height: 35px;
+  font-size: 16px;
+}
+.jsa__table tbody tr:nth-child(even) td {
+  background-color: #fff;
+}
+.jsa__table tbody tr:nth-child(odd) td {
+  background-color: #e0e0e0;
+}
