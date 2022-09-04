@@ -178,6 +178,8 @@ function resetSw() {
   stopwatch.timerValue.minutes  = 0;
   stopwatch.timerValue.seconds  = 0;
   stopwatch.timerValue.milliseconds  = 0;
+  stopwatch.$tableBody.innerHTML = ''
+  stopSw();
   swBoxPrintTime();
 }
 function lapSw(e) {

@@ -29,7 +29,11 @@ document
 function calculatorButtonHandler(e) {
   const dataValue = e.target.getAttribute("data-value");
   if (/\d/.test(dataValue) && !calculate.number2 && !calculate.operand) {
-    $mainInput.value += dataValue;
+    if($mainInput.value == '0'){
+        $mainInput.value = dataValue;
+    }else{
+        $mainInput.value += dataValue;
+    }
     calculate.number1 = parseInt($mainInput.value);
     $printInput.innerHTML += dataValue;
   } else if (
