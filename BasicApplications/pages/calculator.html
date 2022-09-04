@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basic Applications Using Vanilla JS</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/calculator.css" />
+  </head>
+  <body>
+    <header class="jsa__header">
+      <nav class="jsa__nav">
+        <div class="jsa__branding">
+          <a class="js__link" href="/">Javascript Applications</a>
+        </div>
+        <div class="jsa__links">
+          <ul class="jsa__list__none">
+            <li class="jsa__list-item">
+              <a href="/pages/clock.html" class="js__link">
+                <img class="js__link__image" src="../images/clock.svg" alt="" />
+                Clock</a
+              >
+            </li>
+            <li class="jsa__list-item">
+              <a href="/pages/stopwatch.html" class="js__link">
+                <img
+                  class="js__link__image"
+                  src="../images/stopwatch.png"
+                  alt=""
+                />Stopwatch</a
+              >
+            </li>
+            <li class="jsa__list-item">
+              <a href="/pages/calculator.html" class="js__link active">
+                <img
+                  class="js__link__image"
+                  src="../images/calculator.svg"
+                  alt=""
+                />
+                Calculator</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main class="jsa__main">
+      <div class="jsa__container centered jsa__mt-3">
+        <div class="jsa__calculator">
+          <div class="calculator__input">
+            <div id="calculating__div"></div>
+            <input
+              id="calculator__input__field"
+              type="number"
+              value="0"
+              inputmode="numeric"
+              class="jsa__form-control hide-spinners"
+            />
+          </div>
+          <div class="jsa__flex items-strech calc__btn-row">
+            <button class="calc__button" data-value="clear">C</button>
+            <button class="calc__button" data-value="-/+">-/+</button>
+            <button class="calc__button" data-value="%">%</button>
+            <button class="calc__button" data-value="/">&divide;</button>
+          </div>
+          <div class="jsa__flex items-strech calc__btn-row">
+            <button class="calc__button" data-value="7">7</button>
+            <button class="calc__button" data-value="8">8</button>
+            <button class="calc__button" data-value="9">9</button>
+            <button class="calc__button" data-value="*">&times;</button>
+          </div>
+          <div class="jsa__flex items-strech calc__btn-row">
+            <button class="calc__button" data-value="4">4</button>
+            <button class="calc__button" data-value="5">5</button>
+            <button class="calc__button" data-value="6">6</button>
+            <button class="calc__button" data-value="-">-</button>
+          </div>
+          <div class="jsa__flex items-strech calc__btn-row">
+            <button class="calc__button" data-value="1">1</button>
+            <button class="calc__button" data-value="2">2</button>
+            <button class="calc__button" data-value="3">3</button>
+            <button class="calc__button" data-value="+">+</button>
+          </div>
+          <div class="jsa__flex items-strech calc__btn-row">
+            <button class="zero calc__button" data-value="0">0</button>
+            <button class="calc__button" data-value=".">.</button>
+            <button class="calc__button" data-value="=">=</button>
+          </div>
+          <div class="history__wrapper">
+            <ul class="jsa__list__none" id="history__list">
+             
+            </ul>
+            <div class="calculation__history" onclick="this.previousElementSibling.classList.toggle('show')">View History</div>
+            
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="jsa__container centered jsa__mt-3">
+      <h3>&copy; 2022 | good_developer_production</h3>
+    </footer>
+    <script src="../js/script.js"></script>
+    <script src="../js/calculator.js"></script>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+.jsa__calculator {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  width: 250px;
+}
+.calc__btn-row button.zero {
+  width: 50%;
+}
+.calc__btn-row button:hover {
+  background-color: var(--dark);
+  border-color: var(--dark);
+  color: white;
+}
+.calc__btn-row button {
+  height: 40px;
+  width: 25%;
+  border: var(--gray-light) solid 1px;
+  border-radius: 0;
+  cursor: pointer;
+  font-size: 16px;
+}
+.items-strech {
+  align-items: stretch;
+}
+.calculator__input {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: baseline;
+  height: 60px;
+  background-color: white;
+  border: var(--gray-light) solid 1px;
+}
+.calculator__input input {
+  width: 97%;
+  text-align: right;
+  border: none;
+  font-size: 20px;
+  font-weight: 500;
+}
+#calculating__div {
+  width: 100%;
+  color: var(--gray);
+  text-align: right;
+}
+.calculation__history {
+  background-color: var(--dark);
+  width: 100%;
+  color: white;
+  font-size: 14px;
+  padding: 8px 0;
+  text-align: center;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+#history__list li:nth-child(even) {
+  background: var(--gray);
+}
+#history__list li {
+  padding: 5px;
+}
+#history__list.show {
+    height: 100%;
+}
+#history__list {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  border-right: var(--gray) solid 1px;
+  border-left: var(--gray) solid 1px;
+  height: 0;
+  transition:all 0.3s ease-in-out;
+  overflow-y: auto;
+  height: 0;
+  max-height: 200px;
+}

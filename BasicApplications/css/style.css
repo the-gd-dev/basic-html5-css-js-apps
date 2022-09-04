@@ -13,6 +13,13 @@
   --lighter: #fff5c1;
   --lightest: #fffdf0;
 }
+input.hide-spinners::-webkit-inner-spin-button, 
+input.hide-spinners::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
 h1,
 h2,
 h3,
@@ -37,8 +44,12 @@ body {
 }
 
 .js__link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   text-decoration: none;
   color: inherit;
+  column-gap: 4px;
 }
 .jsa__branding .js__link {
   font-size: 20px;
@@ -233,4 +244,8 @@ body {
 }
 .jsa__table tbody tr:nth-child(odd) td {
   background-color: #e0e0e0;
+}
+.js__link__image {
+  height: 30px;
+  width: 30px;
 }
