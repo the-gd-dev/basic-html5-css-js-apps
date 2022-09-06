@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Whatsapp Web - Loading Chats</title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css" />
+    <style>
+      .ww__loading-content {
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 200px;
+        height: 100px;
+      }
+      .ww__main-outer {
+        display: flex;
+        height: 660px;
+        width: 100%;
+      }
+      .progress {
+        width: 400px;
+        height: 4px;
+        border-radius: 8px;
+        overflow: hidden;
+        margin: 16px 0;
+        background-color: var(--secondary);
+      }
+      .progress .loading {
+        height: inherit;
+        width: 0;
+        transition: all ease-in-out 0.3s;
+        background-color: var(--primary);
+      }
+      .box-lg {
+        height: 64px;
+        width: 64px;
+
+        border-radius: 5px;
+        background-color: var(--secondary);
+      }
+      .box-lg.active,
+      .circle-sm.active {
+        background-color: var(--light);
+      }
+      .circle-sm {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        transition: all ease-in-out 0.3s;
+        background-color: var(--secondary);
+      }
+      .circle-lg {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background-color: var(--secondary);
+      }
+      /* .circle-sm.c-2,
+        .circle-sm.c-9 {
+            margin-top: -2.125rem;
+        }
+        .circle-sm.c-3 ,
+        .circle-sm.c-8 {
+            margin-top: -3.5rem;
+        }
+        .circle-sm.c-4 ,
+        .circle-sm.c-7 {
+            margin-top: -4.5rem;
+
+        }
+        .circle-sm.c-5 {
+            margin-top: -5.25rem;
+
+        } */
+
+      .static-content {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 3rem;
+      }
+      .ww__loading-content button {
+        width: 100px;
+        background-color: var(--secondary);
+        color: white;
+        padding: 8px 16px;
+        margin-top: 3rem;
+      }
+      #dots {
+        display: flex;
+        column-gap: 10px;
+      }
+      .box-lg.landscape {
+        width: 100px !important;
+        border: var(--light) solid 3px;
+      }
+      .box-lg.portrait {
+        height: 75px;
+        border: var(--light) solid 3px;
+        width: 45px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="ww__main-outer">
+      <div class="ww__loading-content">
+        <div class="loading-content">
+          <div class="static-content">
+            <div class="box-lg portrait"></div>
+            <div id="dots" class="ww__flex">
+              <div class="circle-sm c-1"></div>
+              <div class="circle-sm c-2"></div>
+              <div class="circle-sm c-3"></div>
+              <div class="circle-sm c-4"></div>
+              <div class="circle-sm c-5"></div>
+              <div class="circle-sm c-6"></div>
+              <div class="circle-sm c-7"></div>
+              <div class="circle-sm c-8"></div>
+              <div class="circle-sm c-9"></div>
+              <div class="circle-sm c-10"></div>
+            </div>
+            <div class="box-lg landscape"></div>
+          </div>
+          <div class="progress">
+            <div class="loading" id="progress-bar"></div>
+          </div>
+        </div>
+        <h4 class="text-light m-2">
+            Connecting...
+          </h4>
+        <small class="text-light">
+          End-to-End Encrypted
+        </small>
+
+        <button>Log Out</button>
+      </div>
+    </main>
+    <script>
+      var progress = 0;
+      const loadingInterval = setInterval(() => {
+        startLoading();
+      }, 250);
+      function startLoading() {
+        document
+          .querySelectorAll(".box-lg")
+          .forEach((ch) => ch.classList.remove("active"));
+        document
+          .querySelectorAll(".circle-sm")
+          .forEach((ch) => ch.classList.remove("active"));
+        if (progress === 0) {
+          document.getElementsByClassName(`box-lg`)[0].classList.add("active");
+        }
+        progress += 10;
+        if (progress == 100) {
+          document.getElementsByClassName(`box-lg`)[1].classList.add("active");
+          progress = 0;
+        }
+        document
+          .getElementsByClassName(`c-${progress / 10}`)[0]
+          .classList.add("active");
+        document
+          .getElementById("progress-bar")
+          .setAttribute("style", `width : ${progress}%;`);
+      }
+      function stopLoading() {
+        clearInterval(loadingInterval);
+      }
+      setTimeout(() => {
+        stopLoading();
+      }, 3000);
+    </script>
+  </body>
+</html>

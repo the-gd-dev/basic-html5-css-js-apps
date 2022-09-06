@@ -1,0 +1,69 @@
+@import url("./variables.css");
+@import url("./default.css");
+.transition-to-children *,
+.transition {
+  transition: all ease-in-out;
+}
+body {
+  background-color: var(--dark);
+}
+.text-primary 
+{
+    color : var(--primary);
+}
+.text-light 
+{
+    color : var(--light);
+}
+.w-100 {
+  width: 100% !important;
+}
+.w-100 {
+  height: 100% !important;
+}
+
+.ww__inline {
+  display: inline;
+}
+.ww__flex {
+  display: flex;
+}
+.ww__justify-center {
+  justify-content: center;
+}
+.ww__items-center {
+  align-items: center;
+}
+.ww__flex-column {
+  flex-direction: column;
+}
+
+/* Margin & Padding */
+.p-4 {
+  padding: 16px;
+}
+.p-3 {
+  padding: 12px;
+}
+.p-2 {
+  padding: 8px;
+}
+.p-1 {
+  padding: 4px;
+}
+
+.m-auto {
+  margin: auto;
+}
+.m-4 {
+  margin: 16px;
+}
+.m-3 {
+  margin: 12px;
+}
+.m-2 {
+  margin: 8px;
+}
+.m-1 {
+  margin: 4px;
+}
