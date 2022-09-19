@@ -4,8 +4,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Whatsapp Web</title>
+    <title>WhatsApp</title>
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.css" />
+    <link
+      rel="apple-touch-icon"
+      href="./vendor/images/apple-touch-icon.png"
+      type="image/png"
+    />
+    <link
+      rel="shortcut icon"
+      href="./vendor/images/apple-touch-icon.png"
+      type="image/png"
+    />
     <style>
       .ww__main {
         display: flex;
@@ -15,20 +25,38 @@
         justify-content: space-between;
         flex-direction: row;
         overflow: hidden;
+        position: relative;
+        z-index: 1;
       }
       .ww__main .conversations {
         width: 30%;
         border-right: rgba(204, 204, 204, 0.3) solid 1px;
       }
+      .ww__main .right__pane {
+        max-height: 670px;
+        overflow-y: auto;
+        display: none;
+        width: 30%;
+        border-left: rgba(204, 204, 204, 0.3) solid 1px;
+      }
+      .right__pane.show {
+        display: inline-block;
+      }
       .ww__main .chatting__wrapper {
         width: 70%;
       }
+      .ww__main .chatting__wrapper.small {
+        width: 40%;
+      }
       .ww__headers {
+        position: sticky;
+        top: 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        padding: 8px 0;
+        padding: 5px 0;
+        box-shadow: var(--dark) 8px 1px 10px;
         background-color: var(--secondary);
       }
 
@@ -54,6 +82,12 @@
         border-radius: 50%;
         background-color: white;
       }
+      .circle-xl {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background-color: white;
+      }
       .vertical-bar {
         display: flex;
         flex-direction: column;
@@ -73,19 +107,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        column-gap: 20px;
         padding-right: 16px;
       }
       .vertical-bar .circle-sm {
-        height: 5px;
-        width: 5px;
+        height: 4px;
+        width: 4px;
       }
       .search__conversation {
         /* padding: 8px 16px; */
         display: flex;
         width: 100%;
         /* align-items: stretch; */
-        column-gap: 9px;
+        column-gap: 6px;
         align-items: center;
         justify-content: space-between;
       }
@@ -158,6 +191,13 @@
       .name-time-wrapper ._name {
         color: white !important;
       }
+      .message-options-wrapper {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        /* position: relative; */
+        /* overflow: hidden; */ 
+      }
       .message-options-wrapper ._message {
         font-size: 14px;
       }
@@ -184,12 +224,13 @@
         /* position: relative; */
       }
       .messages__wrapper .message {
-        display: flex;
+        display: inline-flex;
         width: 100%;
         position: relative;
       }
       .message._sender {
         justify-content: flex-end;
+        align-items: center;
       }
       .message._sender .message__content::after {
         content: "";
@@ -228,40 +269,315 @@
       }
       .messages__wrapper .message .message__content {
         max-width: 40%;
-        padding: 8px 16px;
+        padding: 8px;
         border-radius: 8px;
         color: white;
+        display: flex;
+        flex-direction: column;
+        min-width: 120px;
         /* margin-bottom: 1rem; */
       }
+      .message .message__content:hover ._options {
+        opacity: 1;
+        transform: translateX(0px);
+      }
+      .message .message__content ._options {
+        margin-left: auto;
+        opacity: 0;
+        transition: all ease-in-out 0.3s;
+        transform: translateX(8px);
+        cursor: pointer;
+        margin-bottom: 0.5em;
+      }
+      .msg__time__container ._time {
+        width: 80px;
+        padding: 6px 8px;
+        border-radius: 8px;
+        background-color: var(--secondary);
+      }
       .msg__time__container {
-        display: block;
+        display: flex;
+        justify-content: center;
         width: 100%;
         position: sticky;
-        top: 1000px;
-        color: red;
+        top: 0;
+        text-align: center;
+        color: white;
       }
+      .dropdown-menu {
+        position: relative;
+        z-index: 1;
+      }
+      .drop-menu-content.show {
+        padding: 12px 0;
+        opacity: 1;
+        transform-origin: right top;
+        transform: scale(1);
+        opacity: 1;
+      }
+      .drop-menu-content {
+        position: absolute;
+        min-width: 210px;
+        overflow: hidden;
+        padding: 0;
+        z-index: 1000;
+        right: 10px;
+        margin-top: 3px;
+        opacity: 0;
+        transform-origin: right top;
+        transform: scale(0);
+        opacity: 1;
+        box-shadow: var(--dark) 1px 1px 10px;
+        background-color: var(--secondary);
+        transition: all ease-in-out 0.3s;
+      }
+      .ww__ul__list {
+        list-style: none;
+      }
+      .ww__ul__list li:hover {
+        background-color: var(--dark);
+      }
+      .ww__ul__list li {
+        font-size: 16px;
+        padding: 12px 18px;
+        color: var(--light);
+      }
+      .ww__btn {
+        color: var(--gray);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        transform: scale(1);
+      }
+      .vb__btn {
+        width: 50px;
+        height: 50px;
+      }
+
+      .vb__btn.active {
+        background-color: rgba(55, 66, 72);
+        border-radius: 50%;
+      }
+      .single__conversation:hover .message-options-wrapper ._options {
+        opacity: 1;
+        transform: translateX(0px);
+      }
+      .message-options-wrapper ._options {
+        position: relative;
+        opacity: 0;
+        top: 3px;
+        transform: translateX(10px);
+        transition: all ease-in-out 0.1s;
+      }
+      .message .message__content .replied__to {
+        border-left: lightgreen solid 3px;
+        display: block;
+        padding: 8px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+      .replied_to .message__content {
+        font-size: 12px;
+      }
+      .replied__to .user__name {
+        font-size: 14px;
+      }
+      .right__pane .ww__headers {
+        justify-content: flex-start;
+        padding: 10px 0;
+      }
+      .right__pane .contact__name {
+        font-size: 16px;
+        color: white;
+        font-weight: 500;
+      }
+      .close__rightP {
+        border: 0;
+        outline: 0;
+        width: 40px;
+        height: 40px;
+        background-color: transparent;
+        color: var(--gray);
+        font-size: 36px;
+        margin-right: 30px;
+      }
+      .name__and__profile__pic {
+        display: flex;
+        column-gap: 8px;
+        align-items: center;
+      }
+      .name__and__profile__pic .__name {
+        font-size: 16px;
+        color: white;
+        cursor: pointer;
+      }
+      .right__pane .profile__picture {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        width: 100%;
+      }
+      .right__pane .__name {
+        text-align: center;
+        font-size: 24px;
+        color: white;
+      }
+      .right__pane .__number {
+        text-align: center;
+        font-size: 18px;
+        padding-top: 0.4em;
+        color: var(--gray);
+      }
+
+      .right__pane section {
+        background-color: var(--slategray);
+        padding: 10px 20px;
+      }
+      .right__pane section:not(:first-child) {
+        margin-top: 0.75em;
+      }
+      .right__pane .section__title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--gray) !important;
+        font-size: 14px;
+        padding: 10px 0;
+      }
+      .right__pane ._options img {
+        transform: rotate(-90deg);
+      }
+      .right__pane .section__content {
+        color: white;
+        padding: 8px 0;
+      }
+      .section__content .previewBox {
+        overflow-x: auto;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+        column-gap: 10px;
+        padding: 10px 0;
+      }
+      .previewBox .__content {
+        height: 100px;
+        border: rgba(255, 255, 255, 0.491) solid 6px;
+        width: 100px;
+        background-color: var(--dark);
+        border-radius: 8px;
+      }
+      .section__content ._options .__title{
+        display : flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+      .section__content ._options,
+      .section__content ._options .__title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+      }
+      .section__content ._options:hover {
+        background-color: var(--dark);
+      }
+      .section__content ._options {
+        padding: 15px 20px;
+        margin: 0 -1em;
+        cursor: pointer;
+        margin-bottom: 0.5em;
+      }
+      .section__content ._options .__title {
+        column-gap: 10px;
+      }
+      .section__content ._options .__title.error {
+        color: var(--danger)
+      }
+      .mt-0 {
+        margin-top: 0 !important;
+      }
+      
     </style>
   </head>
   <body>
     <main class="ww__main">
       <div class="conversations">
         <div class="ww__headers">
-          <div class="ww__profile__pic">
-            <div class="circle-sm"></div>
+          <div class="name__and__profile__pic">
+            <div class="ww__profile__pic">
+              <div class="circle-sm"></div>
+            </div>
           </div>
+
           <div class="user__options">
-            <div class="circle-xsm bg-gray"></div>
-            <div class="circle-xsm bg-gray"></div>
-            <div class="vertical-bar">
-              <div class="circle-sm bg-gray"></div>
-              <div class="circle-sm bg-gray"></div>
-              <div class="circle-sm bg-gray"></div>
+            <div class="ww__btn">
+              <svg
+                version="1.1"
+                id="df9d3429-f0ef-48b5-b5eb-f9d27b2deba6"
+                x="0"
+                y="0"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                class=""
+              >
+                <path
+                  fill="currentColor"
+                  d="M12.072 1.761a10.05 10.05 0 0 0-9.303 5.65.977.977 0 0 0 1.756.855 8.098 8.098 0 0 1 7.496-4.553.977.977 0 1 0 .051-1.952zM1.926 13.64a10.052 10.052 0 0 0 7.461 7.925.977.977 0 0 0 .471-1.895 8.097 8.097 0 0 1-6.012-6.386.977.977 0 0 0-1.92.356zm13.729 7.454a10.053 10.053 0 0 0 6.201-8.946.976.976 0 1 0-1.951-.081v.014a8.097 8.097 0 0 1-4.997 7.209.977.977 0 0 0 .727 1.813l.02-.009z"
+                ></path>
+                <path
+                  fill="#009588"
+                  d="M19 1.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"
+                ></path>
+              </svg>
+            </div>
+            <div class="ww__btn">
+              <svg viewBox="0 0 24 24" width="24" height="24" class="">
+                <path
+                  fill="currentColor"
+                  d="M19.005 3.175H4.674C3.642 3.175 3 3.789 3 4.821V21.02l3.544-3.514h12.461c1.033 0 2.064-1.06 2.064-2.093V4.821c-.001-1.032-1.032-1.646-2.064-1.646zm-4.989 9.869H7.041V11.1h6.975v1.944zm3-4H7.041V7.1h9.975v1.944z"
+                ></path>
+              </svg>
+            </div>
+            <div class="dropdown-menu">
+              <div class="vertical-bar vb__btn">
+                <div class="circle-sm bg-gray"></div>
+                <div class="circle-sm bg-gray"></div>
+                <div class="circle-sm bg-gray"></div>
+              </div>
+              <div class="drop-menu-content">
+                <ul class="ww__ul__list">
+                  <li>New group</li>
+                  <li>Archived</li>
+                  <li>Starred messages</li>
+                  <li>Settings</li>
+                  <li>Log out</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
         <div class="search__conversation">
           <input type="text" placeholder="Search or start a new chat" />
-          <div class="circle-xsm bg-gray"></div>
+          <div class="ww__btn">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              preserveAspectRatio="xMidYMid meet"
+              class=""
+            >
+              <path
+                fill="currentColor"
+                d="M10 18.1h4v-2h-4v2zm-7-12v2h18v-2H3zm3 7h12v-2H6v2z"
+              ></path>
+            </svg>
+          </div>
         </div>
         <div class="conversation__list">
           <div class="single__conversation">
@@ -276,261 +592,74 @@
               </div>
               <div class="message-options-wrapper">
                 <div class="_message">Lorem Ipsum dolor sit amet.</div>
-                <div class="_options">&triangledown;</div>
-              </div>
-            </div>
-          </div>
-          <div class="single__conversation">
-            <div class="ww__profile__pic">
-              <div class="circle-md"></div>
-            </div>
-            <!-- <div class="circle-md bg-gray"></div> -->
-            <div class="message__content">
-              <div class="name-time-wrapper">
-                <div class="_name">Jennice Fluffy</div>
-                <div class="_time"><small>00:00 AM</small></div>
-              </div>
-              <div class="message-options-wrapper">
-                <div class="_message">Lorem Ipsum dolor sit amet.</div>
-                <div class="_options">&triangledown;</div>
-              </div>
-            </div>
-          </div>
-          <div class="single__conversation">
-            <div class="ww__profile__pic">
-              <div class="circle-md"></div>
-            </div>
-            <!-- <div class="circle-md bg-gray"></div> -->
-            <div class="message__content">
-              <div class="name-time-wrapper">
-                <div class="_name">Jennice Fluffy</div>
-                <div class="_time"><small>00:00 AM</small></div>
-              </div>
-              <div class="message-options-wrapper">
-                <div class="_message">Lorem Ipsum dolor sit amet.</div>
-                <div class="_options">&triangledown;</div>
-              </div>
-            </div>
-          </div>
-          <div class="single__conversation">
-            <div class="ww__profile__pic">
-              <div class="circle-md"></div>
-            </div>
-            <!-- <div class="circle-md bg-gray"></div> -->
-            <div class="message__content">
-              <div class="name-time-wrapper">
-                <div class="_name">Jennice Fluffy</div>
-                <div class="_time"><small>00:00 AM</small></div>
-              </div>
-              <div class="message-options-wrapper">
-                <div class="_message">Lorem Ipsum dolor sit amet.</div>
-                <div class="_options">&triangledown;</div>
-              </div>
-            </div>
-          </div>
-          <div class="single__conversation">
-            <div class="ww__profile__pic">
-              <div class="circle-md"></div>
-            </div>
-            <!-- <div class="circle-md bg-gray"></div> -->
-            <div class="message__content">
-              <div class="name-time-wrapper">
-                <div class="_name">Jennice Fluffy</div>
-                <div class="_time"><small>00:00 AM</small></div>
-              </div>
-              <div class="message-options-wrapper">
-                <div class="_message">Lorem Ipsum dolor sit amet.</div>
-                <div class="_options">&triangledown;</div>
-              </div>
-            </div>
-          </div>
-          <div class="single__conversation">
-            <div class="ww__profile__pic">
-              <div class="circle-md"></div>
-            </div>
-            <!-- <div class="circle-md bg-gray"></div> -->
-            <div class="message__content">
-              <div class="name-time-wrapper">
-                <div class="_name">Jennice Fluffy</div>
-                <div class="_time"><small>00:00 AM</small></div>
-              </div>
-              <div class="message-options-wrapper">
-                <div class="_message">Lorem Ipsum dolor sit amet.</div>
-                <div class="_options">&triangledown;</div>
-              </div>
-            </div>
-          </div>
-          <div class="single__conversation">
-            <div class="ww__profile__pic">
-              <div class="circle-md"></div>
-            </div>
-            <!-- <div class="circle-md bg-gray"></div> -->
-            <div class="message__content">
-              <div class="name-time-wrapper">
-                <div class="_name">Jennice Fluffy</div>
-                <div class="_time"><small>00:00 AM</small></div>
-              </div>
-              <div class="message-options-wrapper">
-                <div class="_message">Lorem Ipsum dolor sit amet.</div>
-                <div class="_options">&triangledown;</div>
-              </div>
-            </div>
-          </div>
-          <div class="single__conversation">
-            <div class="ww__profile__pic">
-              <div class="circle-md"></div>
-            </div>
-            <!-- <div class="circle-md bg-gray"></div> -->
-            <div class="message__content">
-              <div class="name-time-wrapper">
-                <div class="_name">Jennice Fluffy</div>
-                <div class="_time"><small>00:00 AM</small></div>
-              </div>
-              <div class="message-options-wrapper">
-                <div class="_message">Lorem Ipsum dolor sit amet.</div>
-                <div class="_options">&triangledown;</div>
-              </div>
-            </div>
-          </div>
-          <div class="single__conversation">
-            <div class="ww__profile__pic">
-              <div class="circle-md"></div>
-            </div>
-            <!-- <div class="circle-md bg-gray"></div> -->
-            <div class="message__content">
-              <div class="name-time-wrapper">
-                <div class="_name">Jennice Fluffy</div>
-                <div class="_time"><small>00:00 AM</small></div>
-              </div>
-              <div class="message-options-wrapper">
-                <div class="_message">Lorem Ipsum dolor sit amet.</div>
-                <div class="_options">&triangledown;</div>
-              </div>
-            </div>
-          </div>
-          <div class="single__conversation">
-            <div class="ww__profile__pic">
-              <div class="circle-md"></div>
-            </div>
-            <!-- <div class="circle-md bg-gray"></div> -->
-            <div class="message__content">
-              <div class="name-time-wrapper">
-                <div class="_name">Jennice Fluffy</div>
-                <div class="_time"><small>00:00 AM</small></div>
-              </div>
-              <div class="message-options-wrapper">
-                <div class="_message">Lorem Ipsum dolor sit amet.</div>
-                <div class="_options">&triangledown;</div>
-              </div>
-            </div>
-          </div>
-          <div class="single__conversation">
-            <div class="ww__profile__pic">
-              <div class="circle-md"></div>
-            </div>
-            <!-- <div class="circle-md bg-gray"></div> -->
-            <div class="message__content">
-              <div class="name-time-wrapper">
-                <div class="_name">Jennice Fluffy</div>
-                <div class="_time"><small>00:00 AM</small></div>
-              </div>
-              <div class="message-options-wrapper">
-                <div class="_message">Lorem Ipsum dolor sit amet.</div>
-                <div class="_options">&triangledown;</div>
-              </div>
-            </div>
-          </div>
-          <div class="single__conversation">
-            <div class="ww__profile__pic">
-              <div class="circle-md"></div>
-            </div>
-            <!-- <div class="circle-md bg-gray"></div> -->
-            <div class="message__content">
-              <div class="name-time-wrapper">
-                <div class="_name">Jennice Fluffy</div>
-                <div class="_time"><small>00:00 AM</small></div>
-              </div>
-              <div class="message-options-wrapper">
-                <div class="_message">Lorem Ipsum dolor sit amet.</div>
-                <div class="_options">&triangledown;</div>
+                <div class="_options">
+                  <img
+                    src="./vendor/images/darrow.svg"
+                    height="13"
+                    alt=""
+                    srcset=""
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="chatting__wrapper">
+      <div id="mid__panel" class="chatting__wrapper">
         <div class="ww__headers">
-          <div class="ww__profile__pic">
-            <div class="circle-sm"></div>
+          <div class="name__and__profile__pic">
+            <div class="ww__profile__pic">
+              <div class="circle-sm"></div>
+            </div>
+            <div class="__name" id="msgs__header__name">John Doe</div>
           </div>
           <div class="user__options">
-            <div class="circle-xsm bg-gray"></div>
-            <div class="vertical-bar">
-              <div class="circle-sm bg-gray"></div>
-              <div class="circle-sm bg-gray"></div>
-              <div class="circle-sm bg-gray"></div>
+            <div class="ww__btn">
+              <svg viewBox="0 0 24 24" width="24" height="24" class="">
+                <path
+                  fill="currentColor"
+                  d="M15.9 14.3H15l-.3-.3c1-1.1 1.6-2.7 1.6-4.3 0-3.7-3-6.7-6.7-6.7S3 6 3 9.7s3 6.7 6.7 6.7c1.6 0 3.2-.6 4.3-1.6l.3.3v.8l5.1 5.1 1.5-1.5-5-5.2zm-6.2 0c-2.6 0-4.6-2.1-4.6-4.6s2.1-4.6 4.6-4.6 4.6 2.1 4.6 4.6-2 4.6-4.6 4.6z"
+                ></path>
+              </svg>
+            </div>
+            <div class="dropdown-menu">
+              <div class="vertical-bar vb__btn">
+                <div class="circle-sm bg-gray"></div>
+                <div class="circle-sm bg-gray"></div>
+                <div class="circle-sm bg-gray"></div>
+              </div>
+              <div class="drop-menu-content">
+                <ul class="ww__ul__list">
+                  <li>Contact info</li>
+                  <li>Select messages</li>
+                  <li>Close chat</li>
+                  <li>Mute notifications</li>
+                  <li>Disappearing messages</li>
+                  <li>Clear messages</li>
+                  <li>Delete chat</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
         <div class="messages__container">
-         
           <div class="messages__wrapper">
             <div class="message _sender">
-              <div class="message__content">Hello, John</div>
-            </div>
-            <div class="message _reciever">
-              <div class="message__content">Hello, Lara Croft</div>
-            </div>
-          </div>
-          
-          <div class="messages__wrapper">
-            <div class="message _sender">
-              <div class="message__content">Hello, John</div>
-            </div>
-            <div class="message _reciever">
-              <div class="message__content">Hello, Lara Croft</div>
-            </div>
-          </div>
-
-          <div class="messages__wrapper">
-            <div class="message _sender">
-              <div class="message__content">Hello, John</div>
-            </div>
-            <div class="message _reciever">
-              <div class="message__content">Hello, Lara Croft</div>
-            </div>
-          </div>
-          <div class="messages__wrapper">
-            <div class="message _sender">
-              <div class="message__content">Hello, John</div>
-            </div>
-            <div class="message _reciever">
-              <div class="message__content">Hello, Lara Croft</div>
-            </div>
-          </div>
-          <div class="messages__wrapper">
-            <div class="message _sender">
-              <div class="message__content">Hello, John</div>
-            </div>
-            <div class="message _reciever">
-              <div class="message__content">Hello, Lara Croft</div>
-            </div>
-          </div>
-
-          <div class="messages__wrapper">
-            <div class="message _sender">
-              <div class="message__content">Hello, John</div>
-            </div>
-            <div class="message _reciever">
-              <div class="message__content">Hello, Lara Croft</div>
-            </div>
-          </div>
-          <div class="messages__wrapper">
-            <div class="message _sender">
-              <div class="message__content">Hello, John</div>
-            </div>
-            <div class="message _reciever">
-              <div class="message__content">Hello, Lara Croft</div>
+              <div class="message__content">
+                <div class="_options">
+                  <img
+                    src="./vendor/images/darrow.svg"
+                    height="13"
+                    alt=""
+                    srcset=""
+                  />
+                </div>
+                <div class="replied__to">
+                  <div class="user__name">John Doe</div>
+                  <div class="message_content">Hii</div>
+                </div>
+                Hello, John
+              </div>
             </div>
           </div>
           <div class="msg__time__container">
@@ -544,53 +673,131 @@
               <div class="message__content">Hello, Lara Croft</div>
             </div>
           </div>
-          <div class="messages__wrapper">
-            <div class="message _sender">
-              <div class="message__content">Hello, John</div>
-            </div>
-            <div class="message _reciever">
-              <div class="message__content">Hello, Lara Croft</div>
-            </div>
-          </div>
-          <div class="messages__wrapper">
-            <div class="message _sender">
-              <div class="message__content">Hello, John</div>
-            </div>
-            <div class="message _reciever">
-              <div class="message__content">Hello, Lara Croft</div>
-            </div>
-          </div>
-          <div class="msg__time__container">
-            <div class="_time">00:00 AM</div>
-          </div>
-          <div class="messages__wrapper">
-            <div class="message _sender">
-              <div class="message__content">Hello, John</div>
-            </div>
-            <div class="message _reciever">
-              <div class="message__content">Hello, Lara Croft</div>
-            </div>
-          </div>
-          <div class="messages__wrapper">
-            <div class="message _sender">
-              <div class="message__content">Hello, John</div>
-            </div>
-            <div class="message _reciever">
-              <div class="message__content">Hello, Lara Croft</div>
-            </div>
-          </div>
-          
         </div>
 
         <div class="new__message__wrapper">
           <div class="search__conversation">
-            <div class="circle-sm bg-gray"></div>
-            <div class="circle-sm bg-gray"></div>
+            <div class="ww__btn">
+              <svg
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                class="ekdr8vow dhq51u3o"
+              >
+                <path
+                  fill="currentColor"
+                  d="M9.153 11.603c.795 0 1.439-.879 1.439-1.962s-.644-1.962-1.439-1.962-1.439.879-1.439 1.962.644 1.962 1.439 1.962zm-3.204 1.362c-.026-.307-.131 5.218 6.063 5.551 6.066-.25 6.066-5.551 6.066-5.551-6.078 1.416-12.129 0-12.129 0zm11.363 1.108s-.669 1.959-5.051 1.959c-3.505 0-5.388-1.164-5.607-1.959 0 0 5.912 1.055 10.658 0zM11.804 1.011C5.609 1.011.978 6.033.978 12.228s4.826 10.761 11.021 10.761S23.02 18.423 23.02 12.228c.001-6.195-5.021-11.217-11.216-11.217zM12 21.354c-5.273 0-9.381-3.886-9.381-9.159s3.942-9.548 9.215-9.548 9.548 4.275 9.548 9.548c-.001 5.272-4.109 9.159-9.382 9.159zm3.108-9.751c.795 0 1.439-.879 1.439-1.962s-.644-1.962-1.439-1.962-1.439.879-1.439 1.962.644 1.962 1.439 1.962z"
+                ></path>
+              </svg>
+            </div>
+            <div class="ww__btn">
+              <svg viewBox="0 0 24 24" width="24" height="24" class="">
+                <path
+                  fill="currentColor"
+                  d="M1.816 15.556v.002c0 1.502.584 2.912 1.646 3.972s2.472 1.647 3.974 1.647a5.58 5.58 0 0 0 3.972-1.645l9.547-9.548c.769-.768 1.147-1.767 1.058-2.817-.079-.968-.548-1.927-1.319-2.698-1.594-1.592-4.068-1.711-5.517-.262l-7.916 7.915c-.881.881-.792 2.25.214 3.261.959.958 2.423 1.053 3.263.215l5.511-5.512c.28-.28.267-.722.053-.936l-.244-.244c-.191-.191-.567-.349-.957.04l-5.506 5.506c-.18.18-.635.127-.976-.214-.098-.097-.576-.613-.213-.973l7.915-7.917c.818-.817 2.267-.699 3.23.262.5.501.802 1.1.849 1.685.051.573-.156 1.111-.589 1.543l-9.547 9.549a3.97 3.97 0 0 1-2.829 1.171 3.975 3.975 0 0 1-2.83-1.173 3.973 3.973 0 0 1-1.172-2.828c0-1.071.415-2.076 1.172-2.83l7.209-7.211c.157-.157.264-.579.028-.814L11.5 4.36a.572.572 0 0 0-.834.018l-7.205 7.207a5.577 5.577 0 0 0-1.645 3.971z"
+                ></path>
+              </svg>
+            </div>
             <input type="text" placeholder="Type a new message" />
-            <div class="circle-sm bg-gray"></div>
+            <div class="ww__btn">
+              <svg viewBox="0 0 24 24" width="24" height="24" class="">
+                <path
+                  fill="currentColor"
+                  d="M11.999 14.942c2.001 0 3.531-1.53 3.531-3.531V4.35c0-2.001-1.53-3.531-3.531-3.531S8.469 2.35 8.469 4.35v7.061c0 2.001 1.53 3.531 3.53 3.531zm6.238-3.53c0 3.531-2.942 6.002-6.237 6.002s-6.237-2.471-6.237-6.002H3.761c0 4.001 3.178 7.297 7.061 7.885v3.884h2.354v-3.884c3.884-.588 7.061-3.884 7.061-7.885h-2z"
+                ></path>
+              </svg>
+            </div>
           </div>
         </div>
       </div>
+      <div id="right__panel" class="right__pane">
+        <div class="ww__headers">
+          <button class="close__rightP" id="closeR__Panel">&times;</button>
+          <div class="contact__name"  id="contactName">Contact Info</div>
+        </div>
+        <section class="mt-0">
+          <div class="profile__picture">
+            <div class="circle-xl"></div>
+          </div>
+          <div class="__name">John Doe</div>
+          <div class="__number">+91 1234567890</div>
+        </section>
+        <section>
+          <div class="section__title">About</div>
+          <div class="section__content">Hey there! I am using WhatsApp.</div>
+        </section>
+        <section>
+          <div class="section__title">
+            <span>Media, Links & Docs</span>
+            <div class="_options">
+              20
+              <img
+                src="./vendor/images/darrow.svg"
+                height="13"
+                alt=""
+                srcset=""
+              />
+            </div>
+          </div>
+          <div class="section__content">
+            <div class="previewBox">
+              <div class="__content"></div>
+              <div class="__content"></div>
+              <div class="__content"></div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="section__content">
+            <div class="_options">
+              <div class="__title">
+                <span><svg viewBox="0 0 16 15" height="20" preserveAspectRatio="xMidYMid meet" class=""><path fill="currentColor" d="m8.3 10.2-2.5 1.7c-.3.2-.8-.1-.7-.5L6 8.6c.1-.2 0-.4-.2-.5L3.5 6.3c-.4-.3-.2-.8.2-.8l3-.1c.2 0 .3-.1.4-.3l1-2.8c.1-.4.7-.4.8 0l1 2.8c.1.2.2.3.4.3l3 .1c.4 0 .6.5.3.8l-2.4 1.8c-.1.1-.2.3-.2.5l.9 2.9c.1.4-.3.7-.7.5l-2.5-1.7c-.1-.2-.3-.2-.4-.1z"></path></svg></span>
+                <span>Starred Messages</span>
+              </div>
+              <img
+                src="./vendor/images/darrow.svg"
+                height="13"
+                alt=""
+                srcset=""
+              />
+            </div>
+            <div class="_options">
+              <div class="__title error">
+                <span data-testid="settings-blocked" data-icon="settings-blocked" class=""><svg viewBox="0 0 24 24" width="24" height="24" class=""><path fill="currentColor" d="M12 2.8c-5.3 0-9.7 4.3-9.7 9.7s4.3 9.7 9.7 9.7 9.7-4.3 9.7-9.7-4.4-9.7-9.7-9.7zm-7.3 9.7c0-4 3.3-7.3 7.3-7.3 1.6 0 3.1.5 4.3 1.4L6.1 16.8c-.9-1.2-1.4-2.7-1.4-4.3zm7.3 7.3c-1.6 0-3-.5-4.2-1.4L17.9 8.3c.9 1.2 1.4 2.6 1.4 4.2 0 4-3.3 7.3-7.3 7.3z"></path></svg></span>                
+                <span>Block User</span>
+              </div>
+            </div>
+            <div class="_options">
+              <div class="__title error">
+                <span data-testid="thumbs-down" data-icon="thumbs-down" class=""><svg viewBox="0 0 24 24" width="24" height="24" class=""><path fill="currentColor" d="M14.091 4.2H6.318c-.691 0-1.295.432-1.555 1.036l-2.591 6.132c-.086.173-.172.346-.172.605V13.7c0 .95.777 1.727 1.727 1.727h5.441L8.305 19.4v.259c0 .345.173.691.345.95l.95.864 5.7-5.7c.345-.345.518-.777.518-1.209V5.927c0-.95-.777-1.727-1.727-1.727zm3.454 0v10.364H21V4.2h-3.455z" id="thumb-down"></path></svg></span>                
+                <span>Report User</span>
+              </div>
+            </div>
+            <div class="_options">
+              <div class="__title error">
+                <span data-testid="delete" data-icon="delete" class=""><svg viewBox="0 0 24 24" width="24" height="24" class=""><path fill="currentColor" d="M6 18c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V6H6v12zM19 3h-3.5l-1-1h-5l-1 1H5v2h14V3z"></path></svg></span>                
+                <span>Delete User</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
+    <script>
+      function toggleMidPanel(){
+        document.getElementById('right__panel').classList.toggle('show');
+        document.getElementById('mid__panel').classList.toggle('small');
+      }
+      var closeRightPanelBtn = document.getElementById('closeR__Panel');
+      document.getElementById('msgs__header__name').addEventListener('click',toggleMidPanel)
+      closeRightPanelBtn.addEventListener('click', toggleMidPanel)
+      function showMenu(e) {
+        e.target.classList.toggle("active");
+        e.target.nextElementSibling.classList.toggle("show");
+      }
+      var vbBtns = document.querySelectorAll(".vb__btn");
+      vbBtns.forEach((btn) => btn.addEventListener("click", showMenu));
+      
+    </script>
   </body>
 </html>
